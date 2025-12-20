@@ -1,4 +1,4 @@
-# Registry-Free Configuration (Kamal 2.8+, Rails 8.1+)
+# Registry-Free Configuration (Kamal 2.8+)
 #
 # Perfect for getting started - no Docker Hub account needed.
 # Uses local registry for simple single-server deployments.
