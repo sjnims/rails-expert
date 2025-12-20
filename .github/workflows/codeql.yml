@@ -30,10 +30,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - language: ruby
-            build-mode: none
-          - language: javascript-typescript
-            build-mode: none
+          # Only analyze GitHub Actions workflows - the actual code in this repo
+          # Ruby and JS files in skills/*/examples/ are educational documentation,
+          # not runnable applications, and cause CodeQL to fail extraction
           - language: actions
             build-mode: none
 
