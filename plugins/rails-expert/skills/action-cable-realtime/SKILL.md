@@ -163,6 +163,40 @@ class ChatChannel < ApplicationCable::Channel
 end
 ```
 
+### Channel Callbacks
+
+Channels support lifecycle callbacks and exception handling:
+
+```ruby
+class ChatChannel < ApplicationCable::Channel
+  before_subscribe :verify_access
+  after_subscribe :log_subscription
+
+  rescue_from UnauthorizedError, with: :handle_unauthorized
+
+  def subscribed
+    stream_from "chat_#{params[:room_id]}"
+  end
+
+  private
+
+  def verify_access
+    reject unless current_user.can_access?(params[:room_id])
+  end
+
+  def log_subscription
+    Rails.logger.info "User #{current_user.id} subscribed to chat"
+  end
+
+  def handle_unauthorized(exception)
+    # Handle error, optionally broadcast error message
+    transmit(error: "Unauthorized access")
+  end
+end
+```
+
+Available callbacks: `before_subscribe`, `after_subscribe`, `before_unsubscribe`, `after_unsubscribe`.
+
 ## Broadcasting
 
 Send messages to channel subscribers:
