@@ -23,7 +23,7 @@
 - [ ] Skills (`plugins/rails-expert/skills/rails-*`)
 - [ ] Agent (DHH coordinator, specialists)
 - [ ] Commands (`/rails-team`, `/rails-db`, etc.)
-- [ ] Examples (HTML/CSS/JS/ERB samples in `examples/` folders)
+- [ ] Examples (Ruby/ERB/JS/HTML/CSS/YAML/Shell samples in `examples/` folders)
 - [ ] References (skill reference documents in `references/` folders)
 - [ ] Documentation (README.md, CONTRIBUTING.md, SECURITY.md)
 - [ ] Configuration (plugin.json, .markdownlint.json, .yamllint.yml)
