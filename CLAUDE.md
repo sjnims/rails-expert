@@ -21,7 +21,7 @@ rails-expert/                    # Marketplace root
 │       ├── hooks/
 │       │   └── hooks.json      # PreToolUse hooks for auto-triggering
 │       └── skills/             # 8 knowledge domains with SKILL.md + references/ + examples/
-└── .github/workflows/          # CI checks (18 workflows)
+└── .github/workflows/          # CI checks
 ```
 
 ## Development Commands
@@ -52,6 +52,9 @@ uvx yamllint -c .yamllint.yml .github/ .claude-plugin/ plugins/*/.claude-plugin/
 
 # GitHub Actions validation
 actionlint
+
+# Broken link detection (uses .lycheeignore for exclusions)
+lychee --exclude-path node_modules .
 ```
 
 ### Testing Workflow
@@ -142,6 +145,7 @@ All PRs run these workflows (see `.github/workflows/`):
 
 ## Important Notes
 
-- **Shell Pattern Escaping**: Use `[BANG]` instead of `!` in skill files to prevent shell execution during loading (see SECURITY.md)
+- **Shell Pattern Escaping**: Use `[BANG]` instead of `!` in skill files to prevent shell execution during loading (see SECURITY.md). Audit with: `rg '!\`' plugins/ --glob '*.md' | rg -v '\[BANG\]'`
 - **GitHub Actions Pinning**: Pin actions by full SHA, not version tags: `actions/checkout@SHA # vX.Y.Z`
 - **Restart Required**: Users must restart Claude Code after editing `.claude/rails-expert.local.md`
+- **Version Sync**: Versions in `marketplace.json` and `plugin.json` must match (CI validates via `version-check.yml`)
