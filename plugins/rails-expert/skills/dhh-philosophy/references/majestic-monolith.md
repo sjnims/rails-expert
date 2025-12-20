@@ -482,23 +482,23 @@ Product.select(:id, :name, :price).where(category: 'electronics')
 
 ## Common Objections Answered
 
-**"But microservices let teams work independently!"**
+> "But microservices let teams work independently!"
 
 Namespaces, engines, and good code organization provide independence without network calls.
 
-**"But we need to scale different components differently!"**
+> "But we need to scale different components differently!"
 
 Most applications don't. And when you do, extract that one component—not everything.
 
-**"But microservices are more resilient!"**
+> "But microservices are more resilient!"
 
 Distributed systems have more failure modes. Partial failures are harder to reason about than total failures.
 
-**"But everyone else is doing microservices!"**
+> "But everyone else is doing microservices!"
 
 Everyone else also rewrites their JavaScript framework every 18 months. Make your own decisions.
 
-**"But we might need to scale later!"**
+> "But we might need to scale later!"
 
 YAGNI (You Ain't Gonna Need It). Build for today's problems. Refactor when you have tomorrow's problems.
 

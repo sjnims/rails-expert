@@ -144,7 +144,7 @@ params.require(:product).permit(
 )
 ```
 
-### permit!
+### The `permit!` Method
 
 Allow all parameters (DANGEROUS):
 

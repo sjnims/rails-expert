@@ -377,14 +377,16 @@ If slow:
 
 ## When to Use What
 
-### Use Solid Cable When:
+### Use Solid Cable When
+
 - Building new Rails 8 app
 - <100k concurrent connections
 - 100-200ms latency acceptable
 - Prefer simplicity
 - Want to avoid Redis
 
-### Use Redis When:
+### Use Redis When
+
 - Sub-50ms latency required
 - Millions of messages/second
 - Already running Redis

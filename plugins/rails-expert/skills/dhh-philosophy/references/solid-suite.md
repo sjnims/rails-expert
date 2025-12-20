@@ -437,14 +437,16 @@ These features make database-backed queues performant.
 
 ## When to Use Solid Stack
 
-### Perfect For:
+### Perfect For
+
 - New Rails 8 applications
 - Applications with <1M users
 - Teams wanting simplicity
 - Cost-conscious deployments
 - Developer-friendly stack
 
-### Consider Alternatives If:
+### Consider Alternatives If
+
 - Sub-millisecond latency required
 - Millions of jobs per hour
 - Already heavily invested in Redis

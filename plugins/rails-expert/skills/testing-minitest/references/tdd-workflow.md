@@ -128,8 +128,8 @@ end
 #### Step 2: Add Migration (Red → Green)
 
 ```bash
-$ rails generate migration AddFeaturedToProducts featured:boolean
-$ rails db:migrate
+rails generate migration AddFeaturedToProducts featured:boolean
+rails db:migrate
 ```
 
 #### Step 3: Add Methods (Green)
