@@ -526,9 +526,15 @@ For deeper exploration:
 - **`references/action-cable-patterns.md`**: Chat, notifications, presence patterns
 - **`references/solid-cable.md`**: Database-backed pub/sub in Rails 8
 
-For code examples:
+For code examples (in `examples/`):
 
-- **`examples/action-cable-examples.rb`**: Channel and broadcasting patterns
+- **`chat-channel.rb`**: Real-time chat with typing indicators
+- **`notifications-channel.rb`**: User-specific push notifications
+- **`presence-channel.rb`**: Online status tracking
+- **`dashboard-channel.rb`**: Admin dashboard with live stats
+- **`multi-room-chat.rb`**: Multiple rooms with private messages
+- **`collaborative-editing.rb`**: Document editing with cursors
+- **`live-feed.rb`**: Real-time feed updates
 
 ## Summary
 
