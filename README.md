@@ -1,6 +1,32 @@
 # Rails Expert Plugin
 
+[![Version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsjnims%2Frails-expert%2Fmain%2Fplugins%2Frails-expert%2F.claude-plugin%2Fplugin.json&query=%24.version&label=version&color=blue)](plugins/rails-expert/.claude-plugin/plugin.json)
+[![CI](https://github.com/sjnims/rails-expert/actions/workflows/markdownlint.yml/badge.svg)](https://github.com/sjnims/rails-expert/actions/workflows/markdownlint.yml)
+[![GitHub Issues](https://img.shields.io/github/issues/sjnims/rails-expert)](https://github.com/sjnims/rails-expert/issues)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Rails](https://img.shields.io/badge/Rails-8.0-CC0000.svg?logo=rubyonrails)](https://rubyonrails.org/)
+[![Claude Code](https://img.shields.io/badge/Claude_Code-Plugin-7C3AED.svg)](https://claude.ai/code)
+
 All-in-one Rails 8 expert development team for Claude Code. Consult with DHH and a team of specialist personas for comprehensive Rails guidance.
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Installation](#installation)
+- [Commands](#commands)
+- [Configuration](#configuration)
+- [Proactive Features](#proactive-features)
+- [Specialist Personalities](#specialist-personalities)
+- [DHH Modes](#dhh-modes)
+- [How It Works](#how-it-works)
+- [Examples](#examples)
+- [Requirements](#requirements)
+- [Troubleshooting](#troubleshooting)
+- [Philosophy](#philosophy)
+- [Contributing](#contributing)
+- [License](#license)
+- [Credits](#credits)
 
 ## Overview
 
@@ -26,18 +52,30 @@ The Rails Expert plugin provides access to a virtual development team led by DHH
 
 ## Installation
 
-### From Local Directory
+This repository is structured as a **plugin marketplace** containing the Rails Expert plugin.
+
+### From Repository Root (Marketplace Mode)
+
+Load the entire marketplace, which includes the Rails Expert plugin:
 
 ```bash
 claude --plugin-dir /path/to/rails-expert
 ```
 
-### For Project-Specific Use
+### From Plugin Directory
 
-Copy plugin to your Rails project:
+Load just the Rails Expert plugin directly:
 
 ```bash
-cp -r rails-expert /path/to/your-rails-project/.claude-plugin/
+claude --plugin-dir /path/to/rails-expert/plugins/rails-expert
+```
+
+### For Project-Specific Use
+
+Copy the plugin (not the marketplace root) to your Rails project:
+
+```bash
+cp -r /path/to/rails-expert/plugins/rails-expert /path/to/your-rails-project/.claude-plugin/
 ```
 
 ## Commands
@@ -59,13 +97,14 @@ cp -r rails-expert /path/to/your-rails-project/.claude-plugin/
 - **`/rails-perf [subtopic]`** - Performance & Optimization specialist
 
 Examples:
+
 ```bash
 /rails-db migrations
 /rails-hotwire turbo-frames
 /rails-testing system-tests
 ```
 
-### Configuration
+### Configuration Command
 
 - **`/rails-config [options]`** - Configure plugin settings
   - Interactive mode: `/rails-config`
@@ -74,27 +113,23 @@ Examples:
 
 ## Configuration
 
-Create `.claude/rails-expert.local.md` in your project to customize behavior:
+Create `.claude/rails-expert.local.md` in your project to customize behavior. A comprehensive template is available at [`plugins/rails-expert/.claude-example-settings.md`](plugins/rails-expert/.claude-example-settings.md).
+
+### Quick Start Configuration
 
 ```markdown
 ---
-enabled: true                           # Master enable/disable
-auto_trigger: true                      # Auto-trigger on edits/commands
-verbosity: full                         # full | summary | minimal
-enabled_specialists: ["all"]            # or ["routing", "database", "testing"]
-minimum_change_lines: 5                 # Trigger threshold for edits
-excluded_paths: ["vendor/", "tmp/"]     # Skip these paths
-excluded_files: []                      # Individual file exclusions
-dhh_mode: "full"                        # "full" (opinionated) | "tamed" (professional)
-specialist_personalities: true          # Enable distinct specialist tones
-allow_unprompted_input: true            # Let specialists chime in unsolicited
-enable_debates: true                    # Allow specialist disagreements
-bash_enabled_specialists: ["all"]       # Which specialists can run commands
+enabled: true
+auto_trigger: true
+verbosity: full
+dhh_mode: full
+enabled_specialists: ["all"]
+enable_debates: true
 ---
 
 # Rails Expert Configuration
 
-Custom configuration for this project.
+Custom instructions for this project.
 ```
 
 **After creating or editing settings, restart Claude Code for changes to take effect.**
@@ -105,7 +140,7 @@ Custom configuration for this project.
 |-------|------|---------|-------------|
 | `enabled` | boolean | `true` | Master enable/disable switch |
 | `auto_trigger` | boolean | `true` | Automatically trigger on Rails code edits and commands |
-| `verbosity` | string | `full` | Output detail: `full` (show discussion), `summary` (conclusion only), `minimal` (just recommendation) |
+| `verbosity` | string | `"full"` | Output detail: `full` (show discussion), `summary` (conclusion only), `minimal` (just recommendation) |
 | `enabled_specialists` | array | `["all"]` | Which specialists are active: `["all"]` or list like `["routing", "database", "testing"]` |
 | `minimum_change_lines` | number | `5` | Minimum lines changed to trigger auto-review |
 | `excluded_paths` | array | `["vendor/", "tmp/"]` | Directories to exclude from auto-triggering |
@@ -194,7 +229,7 @@ Specialists read from their skills to provide accurate, up-to-date Rails 8 guida
 
 ### General Consultation
 
-```
+```text
 User: How should I structure my controllers?
 
 DHH: Let me bring in our Routing & Controllers expert...
@@ -212,7 +247,7 @@ DHH: Here's our consensus: [synthesized recommendation]
 
 ### Specialist Disagreement
 
-```
+```text
 User: Should I use callbacks or service objects for this complex workflow?
 
 DHH: Let me get input from our Database and Testing experts...
@@ -233,7 +268,7 @@ DHH: Given the complexity level, here's what we recommend...
 
 ## Requirements
 
-- Claude Code CLI
+- [Claude Code CLI](https://claude.ai/code)
 - Rails project (for auto-triggering features)
 - No external dependencies - plugin is fully self-contained
 
@@ -252,6 +287,7 @@ Settings are user-specific and should not be committed.
 ### Settings Not Taking Effect
 
 Settings are loaded at Claude Code startup. After editing `.claude/rails-expert.local.md`:
+
 1. Save the file
 2. Exit Claude Code
 3. Restart: `claude`
@@ -259,6 +295,7 @@ Settings are loaded at Claude Code startup. After editing `.claude/rails-expert.
 ### Auto-Trigger Not Working
 
 Check:
+
 1. Is `config/application.rb` present? (Rails project detection)
 2. Is `auto_trigger: true` in settings?
 3. Are you editing excluded paths/files?
@@ -267,12 +304,14 @@ Check:
 ### Too Much/Too Little Output
 
 Adjust `verbosity` in settings:
+
 - Too much? Use `summary` or `minimal`
 - Too little? Use `full`
 
 ### Specialists Not Appearing
 
 Check:
+
 1. Is `enabled_specialists: ["all"]` or does it include the specialist?
 2. Is the specialist relevant to the question?
 3. Is `allow_unprompted_input: false` preventing them from chiming in?
@@ -294,16 +333,29 @@ This plugin embodies DHH's Rails 8 philosophy:
 
 ## Contributing
 
-This plugin is based on official Rails guides and Rails 8 best practices. Suggestions for improvement welcome.
+Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) for details on:
+
+- Development setup
+- Code style guidelines
+- Pull request process
+- Issue templates
+
+For security issues, see our [Security Policy](SECURITY.md).
 
 ## License
 
-MIT
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Credits
 
-Built for Claude Code by Steve Nims (@sjnims)
+Built for Claude Code by Steve Nims ([@sjnims](https://github.com/sjnims))
 
 Rails philosophy and guidance based on the work of David Heinemeier Hansson and the Rails core team.
 
-Content extracted and adapted from the official Rails Guides.
+Content extracted and adapted from the official [Rails Guides](https://guides.rubyonrails.org/).
+
+## Additional Resources
+
+- [CHANGELOG](CHANGELOG.md) - Version history
+- [Code of Conduct](CODE_OF_CONDUCT.md) - Community guidelines
+- [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code)
