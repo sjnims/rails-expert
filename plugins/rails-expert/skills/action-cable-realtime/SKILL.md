@@ -163,6 +163,40 @@ class ChatChannel < ApplicationCable::Channel
 end
 ```
 
+### Channel Callbacks
+
+Channels support lifecycle callbacks and exception handling:
+
+```ruby
+class ChatChannel < ApplicationCable::Channel
+  before_subscribe :verify_access
+  after_subscribe :log_subscription
+
+  rescue_from UnauthorizedError, with: :handle_unauthorized
+
+  def subscribed
+    stream_from "chat_#{params[:room_id]}"
+  end
+
+  private
+
+  def verify_access
+    reject unless current_user.can_access?(params[:room_id])
+  end
+
+  def log_subscription
+    Rails.logger.info "User #{current_user.id} subscribed to chat"
+  end
+
+  def handle_unauthorized(exception)
+    # Handle error, optionally broadcast error message
+    transmit(error: "Unauthorized access")
+  end
+end
+```
+
+Available callbacks: `before_subscribe`, `after_subscribe`, `before_unsubscribe`, `after_unsubscribe`.
+
 ## Broadcasting
 
 Send messages to channel subscribers:
@@ -492,9 +526,15 @@ For deeper exploration:
 - **`references/action-cable-patterns.md`**: Chat, notifications, presence patterns
 - **`references/solid-cable.md`**: Database-backed pub/sub in Rails 8
 
-For code examples:
+For code examples (in `examples/`):
 
-- **`examples/action-cable-examples.rb`**: Channel and broadcasting patterns
+- **`chat-channel.rb`**: Real-time chat with typing indicators
+- **`notifications-channel.rb`**: User-specific push notifications
+- **`presence-channel.rb`**: Online status tracking
+- **`dashboard-channel.rb`**: Admin dashboard with live stats
+- **`multi-room-chat.rb`**: Multiple rooms with private messages
+- **`collaborative-editing.rb`**: Document editing with cursors
+- **`live-feed.rb`**: Real-time feed updates
 
 ## Summary
 
