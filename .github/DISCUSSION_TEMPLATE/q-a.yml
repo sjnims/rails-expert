@@ -25,11 +25,13 @@ body:
       description: "Select the area most related to your question"
       options:
         - Installation and setup
+        - Slash commands (/rails-team, /rails-db, etc.)
+        - Specialist behavior (DHH, routing, Active Record, Hotwire, etc.)
+        - Configuration (rails-expert.local.md)
         - Plugin structure
         - Skills (creation, triggering)
         - Agents (creation, AI generation)
         - Hooks (events, prompt-based)
-        - Commands (slash commands)
         - MCP integration
         - Marketplace creation
         - Troubleshooting

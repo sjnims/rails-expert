@@ -24,11 +24,13 @@ body:
       label: Idea Category
       description: "Select the area this idea relates to"
       options:
+        - Rails 8 expertise coverage (new patterns, features)
+        - Specialist improvements (DHH, routing, Active Record, etc.)
+        - Slash commands
         - Plugin structure
         - Skills
         - Agents
         - Hooks
-        - Commands
         - MCP integration
         - Marketplace
         - Documentation

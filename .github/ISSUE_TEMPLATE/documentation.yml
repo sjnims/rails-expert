@@ -16,9 +16,9 @@ body:
         - README.md
         - CLAUDE.md
         - CHANGELOG.md
-        - Command documentation (/rails-expert:component)
-        - Skill documentation (bootstrap-*)
-        - Agent documentation (rails-expert)
+        - Command documentation (/rails-team, /rails-db, etc.)
+        - Skill documentation (rails-routing, rails-active-record, etc.)
+        - Agent documentation (DHH coordinator, specialists)
         - Code of Conduct
         - Contributing guidelines
         - LICENSE
@@ -31,7 +31,7 @@ body:
     attributes:
       label: Specific Location
       description: File path or section name
-      placeholder: "e.g., README.md - Installation section, plugins/rails-expert/skills/bootstrap-layout/SKILL.md"
+      placeholder: "e.g., README.md - Installation section, plugins/rails-expert/skills/rails-routing/SKILL.md"
 
   - type: textarea
     id: issue

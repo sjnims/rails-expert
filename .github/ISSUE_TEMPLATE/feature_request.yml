@@ -31,9 +31,9 @@ body:
     attributes:
       label: Which component would this affect?
       options:
-        - Command (/rails-expert:component)
-        - Skill (bootstrap-overview, bootstrap-layout, etc.)
-        - Agent (rails-expert)
+        - Slash command (/rails-team, /rails-db, etc.)
+        - Skill (rails-routing, rails-active-record, rails-hotwire, etc.)
+        - Agent (DHH coordinator or specialists)
         - New skill request
         - New command request
         - Documentation
@@ -45,7 +45,7 @@ body:
     id: component-name
     attributes:
       label: Specific Component (if applicable)
-      description: E.g., "/rails-expert:component", "bootstrap-forms skill", "rails-expert agent"
+      description: E.g., "/rails-team", "rails-active-record skill", "DHH coordinator agent"
       placeholder: Component name
 
   - type: textarea

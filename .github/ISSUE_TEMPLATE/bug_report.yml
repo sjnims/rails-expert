@@ -24,7 +24,7 @@ body:
       description: Steps to reproduce the behavior
       placeholder: |
         1. Load plugin with `claude --plugin-dir .`
-        2. Run command `/rails-expert:component navbar`
+        2. Run command `/rails-team` or `/rails-db migrations`
         3. See error...
     validations:
       required: true
@@ -53,9 +53,9 @@ body:
       label: Affected Component
       description: Which part of the plugin is affected?
       options:
-        - Command (/rails-expert:component)
-        - Skill (bootstrap-overview, bootstrap-layout, etc.)
-        - Agent (rails-expert)
+        - Slash command (/rails-team, /rails-db, etc.)
+        - Skill (rails-routing, rails-active-record, rails-hotwire, etc.)
+        - Agent (DHH coordinator or specialists)
         - Documentation
         - Other
     validations:
@@ -65,7 +65,7 @@ body:
     id: component-name
     attributes:
       label: Specific Component Name
-      description: E.g., "/rails-expert:component navbar", "bootstrap-layout skill", "rails-expert agent"
+      description: E.g., "/rails-team", "rails-routing skill", "DHH coordinator agent"
       placeholder: "Component name (if applicable)"
 
   - type: textarea
@@ -77,7 +77,8 @@ body:
         - OS: macOS 15.0
         - Claude Code Version: 1.0.0
         - Plugin Version: 0.1.0
-        - Bootstrap Version: 5.3.8
+        - Rails Version: 8.0.x
+        - Ruby Version: 3.x
     validations:
       required: true
 

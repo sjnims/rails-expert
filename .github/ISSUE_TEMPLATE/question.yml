@@ -28,13 +28,14 @@ body:
       label: Question Category
       options:
         - Installation and setup
-        - Using commands
+        - Slash commands (/rails-team, /rails-db, etc.)
+        - Specialist behavior (DHH, routing, Active Record, Hotwire, etc.)
+        - Configuration (rails-expert.local.md)
         - Skill development
         - Agent development
         - Hook development
         - MCP integration
         - Marketplace setup
-        - Understanding the workflow
         - Troubleshooting
         - Contributing
         - Other

@@ -4,133 +4,140 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a **Claude Code plugin** called "Rails Expert" - an all-in-one Rails 8 expert development team with DHH as coordinator and 7 specialist personas covering routing, Active Record, Hotwire, Action Cable, testing, deployment, and performance.
+This is a **Claude Code plugin marketplace** called "Rails Expert" - an all-in-one Rails 8 expert development team with DHH as coordinator and 7 specialist personas covering routing, Active Record, Hotwire, Action Cable, testing, deployment, and performance.
 
-## Plugin Architecture
+## Repository Structure
 
 ```
-rails-expert/
-├── .claude-plugin/plugin.json    # Plugin manifest (name, version, description)
-├── agents/                       # Subagent definitions (8 agents)
-│   ├── dhh-coordinator.md        # Main coordinator - routes to specialists
-│   ├── routing-controllers-specialist.md
-│   ├── active-record-specialist.md
-│   ├── hotwire-specialist.md
-│   ├── action-cable-specialist.md
-│   ├── testing-specialist.md
-│   ├── deployment-specialist.md
-│   └── performance-specialist.md
-├── commands/                     # Slash commands (9 commands)
-│   ├── rails-team.md            # /rails-team - Full team consultation
-│   ├── rails-routing.md         # /rails-routing - Direct specialist access
-│   ├── rails-db.md              # /rails-db
-│   ├── rails-hotwire.md         # /rails-hotwire
-│   ├── rails-realtime.md        # /rails-realtime
-│   ├── rails-testing.md         # /rails-testing
-│   ├── rails-deploy.md          # /rails-deploy
-│   ├── rails-perf.md            # /rails-perf
-│   └── rails-config.md          # /rails-config - Configure settings
-├── skills/                       # Knowledge bases for each domain
-│   ├── dhh-philosophy/          # Core Rails philosophy
-│   ├── routing-controllers/     # RESTful design, routing patterns
-│   ├── active-record-db/        # Models, migrations, queries
-│   ├── hotwire-turbo-stimulus/  # Turbo, Stimulus patterns
-│   ├── action-cable-realtime/   # WebSockets, channels
-│   ├── testing-minitest/        # TDD, Minitest patterns
-│   ├── deployment-kamal/        # Kamal 2, Docker deployment
-│   └── performance-optimization/ # Caching, profiling
-└── hooks/hooks.json             # PreToolUse hooks for auto-triggering
+rails-expert/                    # Marketplace root
+├── .claude-plugin/
+│   └── marketplace.json        # Marketplace manifest (registers plugins)
+├── plugins/
+│   └── rails-expert/           # The actual plugin
+│       ├── .claude-plugin/
+│       │   └── plugin.json     # Plugin manifest
+│       ├── agents/             # 8 subagent definitions
+│       ├── commands/           # 9 slash commands
+│       ├── hooks/
+│       │   └── hooks.json      # PreToolUse hooks for auto-triggering
+│       └── skills/             # 8 knowledge domains with SKILL.md + references/ + examples/
+└── .github/workflows/          # CI checks (17 workflows)
 ```
 
-### Skill Structure
-
-Each skill follows this pattern:
-```
-skills/<skill-name>/
-├── SKILL.md           # ~2000 word overview with frontmatter
-├── references/        # Detailed topical references
-│   └── *.md
-└── examples/          # Code snippets demonstrating patterns
-    └── *.rb|*.js|*.yml
-```
-
-## Development & Testing
+## Development Commands
 
 ### Run Plugin Locally
 
 ```bash
-claude --plugin-dir /path/to/rails-expert
+# From repository root (marketplace mode)
+claude --plugin-dir .
+
+# Or load just the plugin
+claude --plugin-dir ./plugins/rails-expert
 ```
 
-### Test in a Rails Project
+### Linting
 
-Copy to project:
 ```bash
-cp -r rails-expert /path/to/your-rails-project/.claude-plugin/
+# Markdown - must pass before commit
+markdownlint '**/*.md' --ignore node_modules
+markdownlint '**/*.md' --ignore node_modules --fix  # Auto-fix
+
+# YAML configuration files
+uvx yamllint -c .yamllint.yml .github/ .claude-plugin/ plugins/*/.claude-plugin/
+
+# GitHub Actions validation
+actionlint
 ```
 
-### Key Files for Plugin Behavior
+### Testing Workflow
 
-- **`plugin.json`**: Plugin metadata and registration
-- **`hooks/hooks.json`**: Defines PreToolUse hooks that trigger on Write/Edit/Bash operations
-- **`.claude-example-settings.md`**: Template for user settings (copied to `.claude/rails-expert.local.md`)
+```bash
+# Create isolated test environment
+mkdir /tmp/test-rails-plugin && cd /tmp/test-rails-plugin && git init
 
-## Plugin Flow
+# Load plugin
+claude --plugin-dir /path/to/rails-expert
+
+# Test commands
+/rails-team
+/rails-db migrations
+/rails-config
+
+# Clean up
+rm -rf /tmp/test-rails-plugin
+```
+
+## Plugin Architecture
+
+### Component Flow
 
 1. **User triggers**: Via command (`/rails-team`) or auto-trigger (editing Rails files)
-2. **DHH coordinator** analyzes request, determines relevant specialists
-3. **Specialists** are called via Task tool, read from their skills
-4. **Discussion/debate** facilitated by DHH when specialists disagree
-5. **Consensus** synthesized and presented based on verbosity setting
+2. **DHH coordinator** (`agents/dhh-coordinator.md`) analyzes request, calls specialists
+3. **Specialists** provide domain expertise from their skills
+4. **DHH synthesizes** consensus and presents based on verbosity setting
 
-## Configuration
+### Key Files
 
-Users configure via `.claude/rails-expert.local.md` in their project:
+| File | Purpose |
+|------|---------|
+| `.claude-plugin/marketplace.json` | Registers plugin with marketplace metadata |
+| `plugins/rails-expert/.claude-plugin/plugin.json` | Plugin name, version, keywords |
+| `plugins/rails-expert/hooks/hooks.json` | PreToolUse hooks for auto-triggering on Rails file edits and Rails CLI commands |
+| `plugins/rails-expert/.claude-example-settings.md` | Template users copy to `.claude/rails-expert.local.md` |
 
-| Setting | Default | Description |
-|---------|---------|-------------|
-| `dhh_mode` | `"full"` | Personality: `"full"` (opinionated) or `"tamed"` (professional) |
-| `verbosity` | `"full"` | Output: `"full"`, `"summary"`, or `"minimal"` |
-| `auto_trigger` | `true` | Auto-engage on Rails file edits |
-| `enable_debates` | `true` | Allow specialist disagreements |
+### User Configuration
 
-## Agent YAML Frontmatter
+Users configure via `.claude/rails-expert.local.md` in their project (not this repo). Key settings: `dhh_mode`, `verbosity`, `auto_trigger`, `enable_debates`.
 
-Agents use this frontmatter structure:
+## YAML Frontmatter Patterns
+
+### Agents
+
 ```yaml
 ---
 name: agent-name
-description: When to trigger, with examples in <example> blocks
-model: inherit       # or sonnet, opus, haiku
-color: magenta       # Terminal color
-tools: Read, Grep, Glob, Task  # Allowed tools
+description: When to trigger (include <example> blocks)
+model: inherit  # or sonnet, opus, haiku
+color: magenta
+tools: Read, Grep, Glob, Task
 ---
 ```
 
-## Command YAML Frontmatter
+### Commands
 
-Commands use this structure:
 ```yaml
 ---
-description: Short description for help
+description: Short help text
 argument-hint: [optional-arg]
 allowed-tools: Task, Read
 ---
 ```
 
-## Skill YAML Frontmatter
+### Skills
 
-Skills use this structure:
 ```yaml
 ---
 name: skill-name
-description: Trigger phrases and when to use, with <example> blocks
+description: Trigger phrases with <example> blocks
 ---
 ```
 
-## Hook Configuration
+Skills follow progressive disclosure: `SKILL.md` (core ~2000 words) → `references/` (detailed docs) → `examples/` (code patterns).
 
-Hooks in `hooks.json` use prompt-based evaluation to determine when to engage:
-- **Write/Edit matcher**: Checks if editing Rails files (`app/models/*.rb`, etc.)
-- **Bash matcher**: Checks for Rails CLI commands (`rails generate`, `rails db:migrate`)
-- Both respect user settings from `.claude/rails-expert.local.md`
+## CI Checks
+
+All PRs run these workflows (see `.github/workflows/`):
+
+- `markdownlint.yml`, `yaml-lint.yml` - Linting
+- `links.yml` - Broken link detection (uses `.lycheeignore`)
+- `component-validation.yml` - Plugin structure validation
+- `version-check.yml` - Version consistency across manifests
+- `claude-pr-review.yml` - AI-powered review
+- `semantic-labeler.yml` - Auto-labeling based on paths
+
+## Important Notes
+
+- **Shell Pattern Escaping**: Use `[BANG]` instead of `!` in skill files to prevent shell execution during loading (see SECURITY.md)
+- **GitHub Actions Pinning**: Pin actions by full SHA, not version tags: `actions/checkout@SHA # vX.Y.Z`
+- **Restart Required**: Users must restart Claude Code after editing `.claude/rails-expert.local.md`

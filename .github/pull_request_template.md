@@ -1,7 +1,7 @@
 ## Description
 
 <!-- Provide a clear and concise description of your changes -->
-<!-- Reference: https://getbootstrap.com/docs/5.3/ -->
+<!-- Reference: https://guides.rubyonrails.org -->
 <!-- Contributing guide: See CONTRIBUTING.md -->
 
 ## Type of Change
@@ -20,13 +20,13 @@
 
 <!-- Mark all that apply -->
 
-- [ ] Skills (`plugins/rails-expert/skills/bootstrap-*`)
-- [ ] Agent (`rails-expert`)
-- [ ] Commands (`/rails-expert:component`)
+- [ ] Skills (`plugins/rails-expert/skills/rails-*`)
+- [ ] Agent (DHH coordinator, specialists)
+- [ ] Commands (`/rails-team`, `/rails-db`, etc.)
 - [ ] Examples (HTML/CSS/JS/ERB samples in `examples/` folders)
 - [ ] References (skill reference documents in `references/` folders)
 - [ ] Documentation (README.md, CONTRIBUTING.md, SECURITY.md)
-- [ ] Configuration (plugin.json, .markdownlint.json, .htmlhintrc, .erb_lint.yml, .yamllint.yml)
+- [ ] Configuration (plugin.json, .markdownlint.json, .yamllint.yml)
 - [ ] Issue/PR templates
 - [ ] Other (please specify):
 
@@ -49,13 +49,14 @@ Fixes # (issue)
 
 - Claude Code version:
 - OS:
-- Browser(s) tested: <!-- if UI/component changes -->
+- Rails version: <!-- if testing Rails code generation -->
+- Ruby version: <!-- if testing Rails code generation -->
 
 **Test Steps**:
 
 1. <!-- e.g., Load plugin with `claude --plugin-dir .` -->
-2. <!-- e.g., Run command `/rails-expert:component navbar` -->
-3. <!-- e.g., Verify generated HTML is valid Bootstrap 5.3.x -->
+2. <!-- e.g., Run command `/rails-team` or `/rails-db migrations` -->
+3. <!-- e.g., Verify generated code follows Rails conventions -->
 4. <!-- etc. -->
 
 ## Checklist
@@ -75,17 +76,15 @@ Fixes # (issue)
 ### Linting
 
 - [ ] I have run `markdownlint` and fixed all issues
-- [ ] I have run `npx htmlhint` on any HTML example files
-- [ ] I have run `erb_lint --lint-all` on any ERB example files
 - [ ] I have run `uvx yamllint` on any YAML configuration files
 - [ ] I have verified special HTML elements are properly closed (`<p>`, `<img>`, `<example>`, `<commentary>`)
 
-### Bootstrap Compatibility
+### Rails Compatibility
 
-- [ ] Changes align with Bootstrap 5.3.8 documentation
-- [ ] Bootstrap Icons references use version 1.13.x conventions
-- [ ] Generated HTML/CSS uses valid Bootstrap 5.3.x classes
-- [ ] Responsive breakpoints use correct Bootstrap values (sm/md/lg/xl/xxl)
+- [ ] Changes align with Rails 8 conventions and "The Rails Way"
+- [ ] ActiveRecord patterns follow Rails best practices
+- [ ] Hotwire/Turbo/Stimulus code follows conventions (if applicable)
+- [ ] Generated code follows Ruby style guidelines (RuboCop compatible)
 
 ### Accessibility
 
@@ -113,9 +112,9 @@ Fixes # (issue)
 - [ ] Description uses third-person with specific trigger phrases
 - [ ] SKILL.md is 1,000-2,200 words (progressive disclosure)
 - [ ] Detailed content is in `references/` subdirectory
-- [ ] Examples in `examples/` folder are valid HTML/CSS/JS
-- [ ] Content aligns with official Bootstrap documentation
-- [ ] Skill demonstrates Bootstrap best practices
+- [ ] Examples in `examples/` folder are valid Ruby/ERB/JS
+- [ ] Content aligns with official Rails Guides
+- [ ] Skill demonstrates Rails best practices
 
 </details>
 
@@ -134,7 +133,7 @@ Fixes # (issue)
 
 - [ ] I have tested the plugin locally with `claude --plugin-dir .`
 - [ ] I have tested the full workflow (if applicable)
-- [ ] I have verified generated Bootstrap code renders correctly
+- [ ] I have verified generated Rails code follows conventions
 - [ ] I have tested in a clean repository (not my development repo)
 
 ### Version Management (if applicable)
@@ -144,7 +143,7 @@ Fixes # (issue)
 
 ## Screenshots (if applicable)
 
-<!-- Add screenshots to help explain your changes - especially useful for Bootstrap UI components -->
+<!-- Add screenshots to help explain your changes -->
 
 ## Additional Notes
 
@@ -166,7 +165,7 @@ Fixes # (issue)
 
 - [ ] All CI checks pass
 - [ ] Documentation is accurate and complete
-- [ ] Changes align with Bootstrap 5.3.8 best practices
+- [ ] Changes align with Rails 8 best practices
 - [ ] No security vulnerabilities introduced
 - [ ] Breaking changes are clearly documented
 - [ ] Labels are appropriate for the change type

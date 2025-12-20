@@ -27,18 +27,13 @@ Before contributing, ensure you have:
 
 - **Claude Code**: Install from [claude.ai/code](https://claude.ai/code)
 - **Git**: For version control
-- **Node.js**: For markdownlint and htmlhint (optional but recommended)
+- **Node.js**: For markdownlint (optional but recommended)
 
   ```bash
   npm install -g markdownlint-cli
   ```
 
 - **Python/uv**: For yamllint (optional, see [uv docs](https://docs.astral.sh/uv/))
-- **Ruby**: For erb_lint (optional, for ERB example files)
-
-  ```bash
-  gem install erb_lint
-  ```
 
 ### Understanding the Project
 
@@ -332,9 +327,7 @@ rm -rf /tmp/test-bootstrap-plugin
 Before submitting, verify:
 
 1. **Markdown linting passes**: `markdownlint '**/*.md' --ignore node_modules`
-2. **HTML linting passes**: `npx htmlhint 'plugins/**/examples/*.html'`
-3. **ERB linting passes**: `erb_lint --lint-all`
-4. **YAML linting passes**: `uvx yamllint -c .yamllint.yml .github/ .claude-plugin/ plugins/*/.claude-plugin/`
+2. **YAML linting passes**: `uvx yamllint -c .yamllint.yml .github/ .claude-plugin/ plugins/*/.claude-plugin/`
 5. **Generated Bootstrap code is valid**: Test in browser with Bootstrap 5.3.x CSS/JS
 6. **Accessibility**: Components include proper ARIA attributes
 7. **Responsive design**: Breakpoints use correct Bootstrap values
@@ -352,12 +345,6 @@ Before submitting, verify:
 ```bash
 # Lint all markdown
 markdownlint '**/*.md' --ignore node_modules --fix
-
-# Lint HTML example files
-npx htmlhint 'plugins/**/examples/*.html'
-
-# Lint ERB example files
-erb_lint --lint-all
 
 # Lint YAML configuration files
 # Using uv (https://docs.astral.sh/uv/):
@@ -415,8 +402,6 @@ Your PR will automatically run these checks:
 | Workflow | What It Checks |
 |----------|----------------|
 | `markdownlint.yml` | Markdown style and formatting |
-| `html-lint.yml` | HTML example file validation |
-| `erb-lint.yml` | ERB example file validation |
 | `yaml-lint.yml` | YAML configuration consistency |
 | `links.yml` | Broken links in documentation |
 | `component-validation.yml` | Plugin component structure |

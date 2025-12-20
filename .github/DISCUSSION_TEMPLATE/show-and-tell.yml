@@ -22,7 +22,8 @@ body:
       label: Showcase Category
       description: "Select what you're showcasing"
       options:
-        - Complete plugin
+        - Rails app built with plugin
+        - Plugin extension or contribution
         - Skill
         - Agent
         - Hook
