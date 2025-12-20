@@ -52,27 +52,42 @@ Before contributing, ensure you have:
        └── rails-expert/
            ├── .claude-plugin/
            │   └── plugin.json # Plugin manifest
-           ├── agents/
-           │   └── rails-expert.md  # Proactive agent (1 agent)
-           ├── commands/
-           │   └── bootstrap/
-           │       └── component.md  # /rails-expert:component (1 command)
-           └── skills/             # 9 skills aligned with Bootstrap docs
-               ├── bootstrap-overview/
-               ├── bootstrap-customize/
-               ├── bootstrap-layout/
-               ├── bootstrap-content/
-               ├── bootstrap-forms/
-               ├── bootstrap-components/
-               ├── bootstrap-helpers/
-               ├── bootstrap-utilities/
-               └── bootstrap-icons/
+           ├── agents/         # 8 agents (DHH coordinator + 7 specialists)
+           │   ├── dhh-coordinator.md
+           │   ├── routing-controllers-specialist.md
+           │   ├── active-record-specialist.md
+           │   ├── hotwire-specialist.md
+           │   ├── action-cable-specialist.md
+           │   ├── testing-specialist.md
+           │   ├── deployment-specialist.md
+           │   └── performance-specialist.md
+           ├── commands/       # 9 slash commands
+           │   ├── rails-team.md
+           │   ├── rails-routing.md
+           │   ├── rails-db.md
+           │   ├── rails-hotwire.md
+           │   ├── rails-realtime.md
+           │   ├── rails-testing.md
+           │   ├── rails-deploy.md
+           │   ├── rails-perf.md
+           │   └── rails-config.md
+           ├── hooks/
+           │   └── hooks.json  # PreToolUse hooks for auto-triggering
+           └── skills/         # 8 knowledge domains
+               ├── dhh-philosophy/
+               ├── routing-controllers/
+               ├── active-record-db/
+               ├── hotwire-turbo-stimulus/
+               ├── action-cable-realtime/
+               ├── testing-minitest/
+               ├── deployment-kamal/
+               └── performance-optimization/
    ```
 
 3. **Understand the plugin components**:
-   - **9 skills** for different Bootstrap development aspects
-   - **1 agent** (`rails-expert`) for proactive Bootstrap assistance
-   - **1 command** (`/rails-expert:component`) for generating Bootstrap components
+   - **8 skills** covering Rails 8 development domains
+   - **8 agents** (DHH coordinator + 7 specialists) for comprehensive Rails guidance
+   - **9 commands** for direct access to specialists and team consultation
 
 ## Development Setup
 
@@ -104,8 +119,10 @@ git checkout -b fix/issue-description
 # From repository root
 claude --plugin-dir .
 
-# Test command in Claude Code
-/rails-expert:component navbar
+# Test commands in Claude Code
+/rails-team
+/rails-db migrations
+/rails-hotwire turbo-frames
 ```
 
 ## How to Contribute
@@ -123,13 +140,13 @@ claude --plugin-dir .
 - **Check for existing work**: Search issues and PRs to avoid duplicates
 - **Discuss major changes**: Open an issue first for significant changes
 - **One feature per PR**: Keep pull requests focused on a single feature or fix
-- **Follow Bootstrap conventions**: Align with official Bootstrap 5.3.x documentation
+- **Follow Rails conventions**: Align with official Rails 8 documentation and DHH's philosophy
 
 ## Development Guidelines
 
 ### General Principles
 
-1. **Bootstrap Accuracy**: All content must align with Bootstrap 5.3.8 documentation
+1. **Rails Accuracy**: All content must align with Rails 8 documentation and conventions
 2. **Simplicity First**: Don't over-engineer. Keep solutions simple and focused.
 3. **Consistency**: Follow existing patterns in the codebase.
 4. **Documentation**: Document all user-facing changes.
@@ -139,9 +156,9 @@ claude --plugin-dir .
 
 - **Marketplace**: `.claude-plugin/marketplace.json`
 - **Plugin Manifest**: `plugins/rails-expert/.claude-plugin/plugin.json`
-- **Commands**: `plugins/rails-expert/commands/bootstrap/component.md`
-- **Skills**: `plugins/rails-expert/skills/bootstrap-*/SKILL.md`
-- **Agent**: `plugins/rails-expert/agents/rails-expert.md`
+- **Commands**: `plugins/rails-expert/commands/rails-*.md`
+- **Skills**: `plugins/rails-expert/skills/*/SKILL.md`
+- **Agents**: `plugins/rails-expert/agents/*.md`
 
 ### Markdown Style
 
@@ -212,18 +229,17 @@ Current branch: [BANG]`git branch --show-current`
 
 ## Component-Specific Guidelines
 
-### Commands (`/rails-expert:component`)
+### Commands (`/rails-*`)
 
-When creating or modifying the component command:
+When creating or modifying commands:
 
 1. **YAML Frontmatter Required**:
 
    ```yaml
    ---
-   name: component-name
-   description: Brief description
+   description: Brief description shown in /help
    argument-hint: [optional-argument]
-   allowed-tools: Read, Write, Edit, AskUserQuestion
+   allowed-tools: Task, Read
    ---
    ```
 
@@ -231,11 +247,11 @@ When creating or modifying the component command:
    - Good: "Do X", "Run Y", "Create Z"
    - Bad: "You should do X", "Please run Y"
 
-3. **Bootstrap Alignment**: Generated code must use valid Bootstrap 5.3.x classes
+3. **Rails Alignment**: Commands should invoke the appropriate specialist agent
 
 4. **Clear Outputs**: Provide clear success/failure messages
 
-### Skills (Bootstrap Knowledge)
+### Skills (Rails Knowledge)
 
 When creating or modifying skills:
 
@@ -249,20 +265,20 @@ When creating or modifying skills:
    ```
 
 2. **Description**: Use third-person with specific trigger phrases
-   - Good: `This skill should be used when the user asks to "create a responsive grid"`
+   - Good: `This skill should be used when the user asks about "Active Record associations"`
    - Bad: `Use this skill to help users`
 
 3. **Progressive Disclosure**:
    - `SKILL.md`: Core methodology (1,000-2,200 words)
    - `references/`: Detailed documentation
-   - `examples/`: Code examples (HTML, CSS, JS, SCSS)
+   - `examples/`: Code examples (Ruby, ERB, JavaScript)
    - No duplication between files
 
-4. **Bootstrap Accuracy**: Content must align with official Bootstrap 5.3.8 documentation
+4. **Rails Accuracy**: Content must align with official Rails 8 documentation
 
-### Agent (rails-expert)
+### Agents (DHH + Specialists)
 
-When modifying the agent:
+When modifying agents:
 
 1. **YAML Frontmatter Required**:
 
@@ -271,14 +287,14 @@ When modifying the agent:
    name: agent-name
    description: Use this agent when...
    model: inherit
-   color: cyan
-   tools: Read, Write, Edit, Grep, Glob
+   color: magenta  # DHH uses magenta, specialists use other colors
+   tools: Read, Grep, Glob, Task
    ---
    ```
 
 2. **Trigger Examples**: Include 3-4 `<example>` blocks showing when the agent should trigger
 
-3. **Clear System Prompt**: Be specific about the agent's role and Rails Expertise
+3. **Clear System Prompt**: Be specific about the agent's role and Rails expertise
 
 4. **Minimal Tools**: Only include tools the agent actually needs
 
@@ -288,21 +304,22 @@ When modifying the agent:
 |---------|---------|----------|
 | Testing in development repo | Pollutes your environment with test files | Create a separate test repository |
 | Using `!` in skill documentation | Shell execution during skill load | Use `[BANG]` placeholder (see [SECURITY.md](SECURITY.md)) |
-| Unescaped HTML special characters | HTMLHint errors, rendering issues | Escape `<` → `&lt;`, `>` → `&gt;`, `&` → `&amp;` |
+| Unescaped HTML special characters | HTMLHint errors, rendering issues | Escape `<` to `&lt;`, `>` to `&gt;`, `&` to `&amp;` |
 | Missing trigger phrases | Skills don't load when expected | Include specific user queries in descriptions |
 | Large SKILL.md files | Slow loading, excessive context | Keep core 1,000-2,200 words; use `references/` for details |
 | Missing frontmatter fields | Components fail validation | Always include required fields (`name`, `description`) |
-| Outdated Bootstrap classes | Generated code doesn't work | Verify against Bootstrap 5.3.8 docs |
-| Wrong breakpoint names | Responsive design breaks | Use sm/md/lg/xl/xxl (Bootstrap 5.x) |
+| Outdated Rails patterns | Generated code doesn't follow conventions | Verify against Rails 8 docs and guides |
+| Wrong specialist for topic | User gets irrelevant guidance | Match specialist to their domain of expertise |
 
 ## Testing
 
 ### Local Testing Checklist
 
 - [ ] Load plugin: `claude --plugin-dir .`
-- [ ] Test the component command: `/rails-expert:component navbar`
-- [ ] Verify skills load when asking Bootstrap questions
-- [ ] Test generated HTML renders correctly with Bootstrap 5.3.x
+- [ ] Test team consultation: `/rails-team`
+- [ ] Test individual specialists: `/rails-db`, `/rails-hotwire`, etc.
+- [ ] Verify skills load when asking Rails questions
+- [ ] Test configuration: `/rails-config`
 - [ ] Test in a clean repository (not your development repo)
 
 ### Test Repository
@@ -311,15 +328,20 @@ Create a test repository to avoid polluting your development environment:
 
 ```bash
 # Create a temporary test directory
-mkdir /tmp/test-bootstrap-plugin
-cd /tmp/test-bootstrap-plugin
+mkdir /tmp/test-rails-plugin
+cd /tmp/test-rails-plugin
 git init
 
 # Test the plugin
 claude --plugin-dir /path/to/rails-expert
 
+# Test commands
+/rails-team routing
+/rails-db migrations
+/rails-config
+
 # Clean up when done
-rm -rf /tmp/test-bootstrap-plugin
+rm -rf /tmp/test-rails-plugin
 ```
 
 ### Validation Checklist
@@ -328,9 +350,10 @@ Before submitting, verify:
 
 1. **Markdown linting passes**: `markdownlint '**/*.md' --ignore node_modules`
 2. **YAML linting passes**: `uvx yamllint -c .yamllint.yml .github/ .claude-plugin/ plugins/*/.claude-plugin/`
-5. **Generated Bootstrap code is valid**: Test in browser with Bootstrap 5.3.x CSS/JS
-6. **Accessibility**: Components include proper ARIA attributes
-7. **Responsive design**: Breakpoints use correct Bootstrap values
+3. **Ruby linting passes**: `rubocop --config .rubocop.yml`
+4. **Ruby code examples are valid**: Test examples in Rails console or app
+5. **Accessibility**: Components include proper guidance for accessible Rails apps
+6. **Rails conventions**: Code follows Rails 8 conventions and DHH's philosophy
 
 ## Submitting Changes
 
@@ -352,8 +375,11 @@ uvx yamllint -c .yamllint.yml .github/ .claude-plugin/ plugins/*/.claude-plugin/
 # Or with pip:
 # pip install yamllint && yamllint -c .yamllint.yml .github/ .claude-plugin/ plugins/*/.claude-plugin/
 
+# Lint Ruby examples
+rubocop --config .rubocop.yml
+
 # Check specific markdown files
-markdownlint plugins/rails-expert/skills/bootstrap-layout/SKILL.md
+markdownlint plugins/rails-expert/skills/active-record-db/SKILL.md
 ```
 
 ### 3. Commit Your Changes
@@ -361,11 +387,11 @@ markdownlint plugins/rails-expert/skills/bootstrap-layout/SKILL.md
 Use clear, descriptive commit messages following [Conventional Commits](https://www.conventionalcommits.org/):
 
 ```bash
-git commit -m "feat: add carousel component generation
+git commit -m "feat: add Action Mailbox specialist
 
-- Add carousel patterns to bootstrap-components skill
-- Include accessibility attributes for screen readers
-- Add responsive image handling
+- Add action-mailbox-specialist agent
+- Add action-mailbox skill with references and examples
+- Add /rails-mailbox command
 
 Fixes #123"
 ```
@@ -391,8 +417,9 @@ See [pull_request_template.md](.github/pull_request_template.md) for the complet
 - [ ] Code follows style guidelines
 - [ ] Documentation updated
 - [ ] Markdown linted
+- [ ] Ruby examples linted
 - [ ] Tested locally
-- [ ] Bootstrap code aligns with 5.3.8 documentation
+- [ ] Rails code aligns with Rails 8 documentation
 - [ ] No breaking changes (or clearly documented)
 
 ### CI Checks on Pull Requests
@@ -403,6 +430,7 @@ Your PR will automatically run these checks:
 |----------|----------------|
 | `markdownlint.yml` | Markdown style and formatting |
 | `yaml-lint.yml` | YAML configuration consistency |
+| `ruby-lint.yml` | Ruby code style (RuboCop) |
 | `links.yml` | Broken links in documentation |
 | `component-validation.yml` | Plugin component structure |
 | `version-check.yml` | Version consistency across manifests |
@@ -428,12 +456,13 @@ All checks must pass before merging. Fix any failures before requesting review.
 - Use consistent indentation (2 spaces)
 - Use comma-separated lists for tools: `Tool1, Tool2`
 
-### Bootstrap Code Examples
+### Ruby Code Examples
 
-- Use Bootstrap 5.3.x class names
-- Include necessary ARIA attributes for accessibility
-- Show responsive variations where applicable
-- Include both HTML and any required JavaScript initialization
+- Follow Rails conventions and idioms
+- Use Ruby 3.2+ syntax where appropriate
+- Include necessary context (model relationships, etc.)
+- Show both the pattern and when to use it
+- Follow RuboCop rules (see `.rubocop.yml`)
 
 ### Git Commit Messages
 
@@ -487,4 +516,4 @@ If you have questions not covered here:
 
 ---
 
-**Thank you for contributing to Rails Expert!** Your contributions help make Bootstrap development better for everyone using Claude Code.
+**Thank you for contributing to Rails Expert!** Your contributions help make Rails development better for everyone using Claude Code.
