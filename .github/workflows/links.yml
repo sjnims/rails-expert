@@ -56,3 +56,22 @@ jobs:
           labels: |
             bug
             documentation
+
+      - name: Close existing broken links issues
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Find and close any open "Broken links detected" issues since links are now valid
+          existing_issues=$(gh issue list --label "bug,documentation" --state open --json number,title \
+            --jq '.[] | select(.title == "Broken links detected") | .number')
+
+          if [ -n "$existing_issues" ]; then
+            echo "Closing resolved broken links issues:"
+            echo "$existing_issues" | while read -r issue_num; do
+              echo "  Closing issue #$issue_num"
+              gh issue close "$issue_num" --comment "All links are now valid. Closing automatically."
+            done
+          else
+            echo "No open broken links issues to close"
+          fi

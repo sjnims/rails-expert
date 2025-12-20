@@ -48,7 +48,7 @@ jobs:
           fi
 
       - name: Generate maintenance report
-        uses: anthropics/claude-code-action@94e310eb2ce38c5bff2934c5858caf6cbde5ac01 # v1.0.26
+        uses: anthropics/claude-code-action@161409cbadcdd475a4ec92d96b7a52498ffc743f # v1.0.27
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           prompt: |
@@ -96,6 +96,15 @@ jobs:
             - Search for `*-SUGGESTED.md`, `*-BACKUP.md`, `*-OLD.md` in plugins/**/commands/, plugins/**/skills/, plugins/**/agents/ directories
             - Report any found
 
+            ### 7. Action Version Freshness
+            Check for pending Dependabot PRs that update GitHub Actions:
+            ```bash
+            gh pr list --author "app/dependabot" --state open --json number,title,createdAt --jq '[.[] | select(.title | contains("Bump") or contains("Update"))]'
+            ```
+            - Count pending action update PRs
+            - Flag any PRs open for more than 7 days (may need attention)
+            - Note: This helps ensure we're running secure, up-to-date actions
+
             ## Report Format
 
             Create a markdown report with this structure:
@@ -113,6 +122,7 @@ jobs:
             | Open PRs | {emoji} | {count} PRs >7 days |
             | Documentation | {emoji} | {status} |
             | Plugin Structure | {emoji} | {status} |
+            | Action Updates | {emoji} | {count} pending Dependabot PRs |
 
             ## Action Items
 

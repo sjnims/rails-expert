@@ -35,7 +35,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@ed55d55e820a01da7d3e4863a8c51a61d73c3228 # v1.274.0
         with:
-          ruby-version: '3.3'
+          ruby-version: '3.4'
 
       - name: Install RuboCop
         run: gem install rubocop:1.81.1 rubocop-rails:2.34.2 --no-document
