@@ -60,15 +60,15 @@ When a security vulnerability is confirmed:
 ### For Plugin Users
 
 1. **Keep Updated**: Always use the latest version of the plugin
-2. **Review Commands**: Review what the `/rails-expert:component` command does before running it
-3. **Verify Output**: Always review generated Bootstrap code before using in production
-4. **Use Trusted Sources**: Only load Bootstrap CSS/JS from official CDN or npm packages
+2. **Review Commands**: Understand what `/rails-team` and specialist commands do before running them
+3. **Verify Output**: Always review generated Rails code before using in production
+4. **Test Recommendations**: Test specialist recommendations in a development environment first
 
 ### For Contributors
 
 1. **No Secrets in Code**: Never commit API keys, tokens, or credentials
 2. **Code Review**: All changes go through pull request review
-3. **Linting**: Run `markdownlint` and `yamllint` before committing to catch potential issues
+3. **Linting**: Run `markdownlint`, `yamllint`, and `rubocop` before committing to catch potential issues
 4. **Test Locally**: Always test with `claude --plugin-dir .` before pushing
 
 ## Known Security Mitigations
@@ -101,16 +101,16 @@ Current branch: [BANG]`git branch --show-current`
 This security policy applies to:
 
 - The Rails Expert Claude Code plugin
-- All components: commands, skills, and the agent
+- All components: commands, skills, agents, and hooks
 - Documentation that affects security
 
 ## Out of Scope
 
 The following are **not** covered by this security policy:
 
-- Vulnerabilities in Claude Code itself (report to Anthropic)
-- Vulnerabilities in Bootstrap framework (report to Bootstrap team)
-- Vulnerabilities in Bootstrap Icons (report to Bootstrap team)
+- Vulnerabilities in Claude Code itself (report to [Anthropic](https://github.com/anthropics/claude-code/security))
+- Vulnerabilities in Ruby on Rails framework (report to [Rails Security](https://rubyonrails.org/security))
+- Vulnerabilities in Ruby language (report to [Ruby Security](https://www.ruby-lang.org/en/security/))
 - Third-party integrations not maintained by this project
 
 ## Security Disclosure Policy
@@ -142,7 +142,8 @@ _No security issues have been reported yet._
 
 ## Additional Resources
 
-- [Bootstrap Security](https://github.com/twbs/bootstrap/security)
+- [Rails Security Policy](https://rubyonrails.org/security)
+- [Rails Security Guide](https://guides.rubyonrails.org/security.html)
 - [Claude Code](https://github.com/anthropics/claude-code)
 - [Responsible Disclosure](https://en.wikipedia.org/wiki/Responsible_disclosure)
 
