@@ -1,0 +1,3 @@
+# Linting dependencies for CI workflows
+# Used by: yaml-lint.yml, claude-pr-review.yml
+yamllint==1.37.1

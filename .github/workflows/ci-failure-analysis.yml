@@ -1,7 +1,7 @@
 name: CI Failure Analysis
 
 # Automatically analyze failed CI runs and provide actionable fix suggestions
-# Triggers when any lint workflow fails (Markdown, HTML, ERB, YAML, Links, Workflows)
+# Triggers when any lint workflow fails (Markdown, Ruby, YAML, Links, Workflows)
 #
 # Testing: Intentionally fail markdownlint (e.g., change - to * in any .md file)
 
@@ -9,8 +9,7 @@ on:
   workflow_run:
     workflows:
       - "Markdown Lint"
-      - "HTML Lint"
-      - "ERB Lint"
+      - "Ruby Lint"
       - "YAML Lint"
       - "Check Links"
       - "Validate Workflows"
@@ -101,6 +100,12 @@ jobs:
             - Look for YAML syntax errors or invalid workflow configurations
             - Check for missing required fields, invalid expressions, or deprecated syntax
 
+            **For "Ruby Lint" (RuboCop) failures:**
+            - Look for lines like: `filename:line:column: C: CopName: message`
+            - Read `.rubocop.yml` to understand the project's rules
+            - Common issues: style violations, naming conventions, code complexity
+            - Auto-fix available: `rubocop -a` for safe fixes, `rubocop -A` for all auto-corrections
+
             ### Step 3: Find the associated PR
 
             Try to find the pull request associated with this commit:
@@ -162,6 +167,15 @@ jobs:
 
             {For workflow validation failures}
             - Show corrected YAML syntax
+
+            {For Ruby failures}
+            **Option 1**: Auto-fix with RuboCop
+            ```bash
+            rubocop -a "{file}"
+            ```
+
+            **Option 2**: Manual fix
+            {Explain specific change needed based on the cop violation}
 
             ---
             🤖 Analyzed by [Claude](https://claude.ai/code)

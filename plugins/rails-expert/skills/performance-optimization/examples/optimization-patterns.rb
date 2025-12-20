@@ -338,15 +338,15 @@ end
 # ==============================================================================
 
 # config/database.yml
-production:
-  adapter: postgresql
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  # One connection per thread
-
+# production:
+#   adapter: postgresql
+#   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+#   # One connection per thread
+#
 # With Solid Queue workers, increase pool:
-production:
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } + 10 %>
-  # +10 for background workers
+# production:
+#   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } + 10 %>
+#   # +10 for background workers
 
 # ==============================================================================
 # PATTERN 14: Asset Optimization

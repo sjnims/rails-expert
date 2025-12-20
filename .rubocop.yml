@@ -1,0 +1,249 @@
+# RuboCop Configuration for Rails Expert Plugin
+# https://docs.rubocop.org/rubocop/configuration.html
+#
+# This configuration targets Ruby 3.3+ (Rails 8 minimum) and is optimized
+# for educational example files that demonstrate Rails patterns.
+
+plugins:
+  - rubocop-rails
+
+AllCops:
+  TargetRubyVersion: 3.3
+  NewCops: enable
+  SuggestExtensions: false
+  Exclude:
+    - 'vendor/**/*'
+    - 'node_modules/**/*'
+    - 'tmp/**/*'
+
+# ============================================================
+# Style Cops
+# ============================================================
+
+# Examples use extensive inline comments instead of class-level docs
+Style/Documentation:
+  Enabled: false
+
+# Not enforced for example/demo files
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# Allow both styles for educational variety
+Style/StringLiterals:
+  Enabled: false
+
+# Examples show various guard clause patterns for teaching
+Style/GuardClause:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+Style/IfUnlessModifier:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+Style/NegatedIf:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+Style/Lambda:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+Style/SymbolArray:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+Style/NumericLiterals:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+Style/ClassAndModuleChildren:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+Style/HashAsLastArrayItem:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+Style/RedundantRegexpEscape:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+# ============================================================
+# Layout Cops
+# ============================================================
+
+# Examples may use various indentation for teaching purposes
+Layout/FirstHashElementIndentation:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+Layout/FirstArrayElementIndentation:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+Layout/ExtraSpacing:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+Layout/EmptyLineAfterGuardClause:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+Layout/MultilineMethodCallIndentation:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+Layout/LineLength:
+  Max: 120
+  AllowedPatterns:
+    - '^\s*#'  # Allow long comment lines
+
+# ============================================================
+# Metrics Cops - Relaxed for example files
+# Educational files need more space to demonstrate patterns
+# ============================================================
+
+Metrics/ClassLength:
+  Max: 150
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+Metrics/MethodLength:
+  Max: 20
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+Metrics/ModuleLength:
+  Max: 150
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+Metrics/AbcSize:
+  Max: 20
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+Metrics/PerceivedComplexity:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+# ============================================================
+# Naming Cops
+# ============================================================
+
+# Example files may have multiple classes demonstrating related concepts
+Naming/FileName:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+# ============================================================
+# Lint Cops - Relaxed for example files
+# Demo code may have intentional patterns for illustration
+# ============================================================
+
+Lint/UselessAssignment:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+Lint/UnusedMethodArgument:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+Lint/UnusedBlockArgument:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+# Examples may define same method multiple times to show variations
+Lint/DuplicateMethods:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+# Examples may have duplicate requires to show context in different sections
+Lint/DuplicateRequire:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+# Examples use clear regex patterns for teaching
+Lint/AmbiguousRegexpLiteral:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+Lint/UselessAccessModifier:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+Lint/IneffectiveAccessModifier:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+# ============================================================
+# Rails Cops
+# ============================================================
+
+# Examples demonstrate patterns, not all in ApplicationRecord context
+Rails/ApplicationRecord:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+# Examples may show controller patterns without full inheritance
+Rails/ApplicationController:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+# Examples demonstrate migrations without full context
+Rails/CreateTableWithTimestamps:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+# Not all example code will have real mailers defined
+Rails/ApplicationMailer:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+# Skip i18n requirement for example strings
+Rails/I18nLocaleTexts:
+  Enabled: false
+
+# Examples may show update_all/update_column for teaching
+Rails/SkipsModelValidations:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+# Examples demonstrate Date.today patterns
+Rails/Date:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+# Examples may show .all explicitly for clarity
+Rails/RedundantActiveRecordAllMethod:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+# Examples may use blank? patterns for teaching
+Rails/Blank:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+# Examples may demonstrate each vs find_each patterns
+Rails/FindEach:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+# Examples show logger usage patterns
+Rails/EagerEvaluationLogMessage:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'
+
+# Examples may have explicit operator precedence for clarity
+Lint/AmbiguousOperatorPrecedence:
+  Exclude:
+    - 'plugins/**/examples/**/*.rb'

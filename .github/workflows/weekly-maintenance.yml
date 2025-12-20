@@ -88,8 +88,8 @@ jobs:
             Count and list any found.
 
             ### 5. Documentation Freshness
-            - Check if README.md mentions the current version
             - Check when CLAUDE.md was last modified (via git log)
+            - Flag if CLAUDE.md hasn't been updated in over 90 days
 
             ### 6. Plugin Structure
             Check for draft files that shouldn't be in production directories:

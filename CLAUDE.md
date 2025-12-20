@@ -21,7 +21,7 @@ rails-expert/                    # Marketplace root
 │       ├── hooks/
 │       │   └── hooks.json      # PreToolUse hooks for auto-triggering
 │       └── skills/             # 8 knowledge domains with SKILL.md + references/ + examples/
-└── .github/workflows/          # CI checks (17 workflows)
+└── .github/workflows/          # CI checks (18 workflows)
 ```
 
 ## Development Commands
@@ -42,6 +42,10 @@ claude --plugin-dir ./plugins/rails-expert
 # Markdown - must pass before commit
 markdownlint '**/*.md' --ignore node_modules
 markdownlint '**/*.md' --ignore node_modules --fix  # Auto-fix
+
+# Ruby - example files in skills/*/examples/
+rubocop --config .rubocop.yml
+rubocop --config .rubocop.yml -a  # Auto-fix (safe corrections only)
 
 # YAML configuration files
 uvx yamllint -c .yamllint.yml .github/ .claude-plugin/ plugins/*/.claude-plugin/
@@ -129,7 +133,7 @@ Skills follow progressive disclosure: `SKILL.md` (core ~2000 words) → `referen
 
 All PRs run these workflows (see `.github/workflows/`):
 
-- `markdownlint.yml`, `yaml-lint.yml` - Linting
+- `markdownlint.yml`, `ruby-lint.yml`, `yaml-lint.yml` - Linting
 - `links.yml` - Broken link detection (uses `.lycheeignore`)
 - `component-validation.yml` - Plugin structure validation
 - `version-check.yml` - Version consistency across manifests
