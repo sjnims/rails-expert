@@ -23,6 +23,7 @@ proxy:
 env:
   clear:
     RAILS_ENV: production
+  # ⚠️ SECURITY: Set these in .kamal/secrets - NEVER commit credentials to git
   secret:
     - RAILS_MASTER_KEY
     - DATABASE_URL
@@ -46,6 +47,7 @@ proxy:
 env:
   clear:
     RAILS_ENV: staging
+  # ⚠️ SECURITY: Use separate staging secrets in .kamal/secrets - NEVER share with production
   secret:
     - RAILS_MASTER_KEY_STAGING
     - DATABASE_URL_STAGING
