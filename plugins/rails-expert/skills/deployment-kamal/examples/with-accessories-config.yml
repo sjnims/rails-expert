@@ -20,6 +20,7 @@ accessories:
     env:
       POSTGRES_DB: myapp_production
       POSTGRES_USER: myapp
+      # ⚠️ SECURITY: Set DB_PASSWORD in .kamal/secrets - NEVER hardcode
       POSTGRES_PASSWORD:
         - DB_PASSWORD
     directories:
@@ -43,7 +44,9 @@ proxy:
 
 env:
   clear:
-    DATABASE_URL: postgresql://myapp:password@db:5432/myapp_production
+    # ⚠️ CHANGE THIS: Replace CHANGE_ME with your actual DB password from secrets
+    DATABASE_URL: postgresql://myapp:CHANGE_ME@db:5432/myapp_production
     REDIS_URL: redis://redis:6379/0
+  # ⚠️ SECURITY: Set RAILS_MASTER_KEY in .kamal/secrets - NEVER commit to git
   secret:
     - RAILS_MASTER_KEY

@@ -39,6 +39,7 @@ proxy:
 env:
   clear:
     RAILS_ENV: production
+  # ⚠️ SECURITY: Set these in .kamal/secrets - NEVER commit credentials to git
   secret:
     - RAILS_MASTER_KEY
     - DATABASE_URL
@@ -53,6 +54,7 @@ volumes:
 # env:
 #   clear:
 #     ACTIVE_STORAGE_SERVICE: amazon
+#   # ⚠️ SECURITY: Set AWS credentials in .kamal/secrets - NEVER hardcode
 #   secret:
 #     - AWS_ACCESS_KEY_ID
 #     - AWS_SECRET_ACCESS_KEY
