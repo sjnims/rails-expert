@@ -376,6 +376,39 @@ assert_select "h1", "Products"
 assert_select "div.product", count: 5
 ```
 
+### SQL Query Assertions
+
+Test database query behavior:
+
+```ruby
+# Assert exact query count
+assert_queries_count(2) do
+  User.find(1)
+  User.find(2)
+end
+
+# Assert no queries (useful for caching tests)
+assert_no_queries { cached_value }
+
+# Match query patterns
+assert_queries_match(/SELECT.*users/) { User.first }
+assert_no_queries_match(/UPDATE/) { User.first }
+```
+
+### Error Reporter Assertions
+
+Test error reporting behavior:
+
+```ruby
+assert_error_reported(CustomError) do
+  Rails.error.report(CustomError.new("test"))
+end
+
+assert_no_error_reported do
+  safe_operation
+end
+```
+
 ## Test-Driven Development (TDD)
 
 Rails encourages TDD: write tests first, then implement.
@@ -441,12 +474,68 @@ rails test --fail-fast
 rails test --verbose
 ```
 
+## Parallel Testing
+
+Rails can run tests in parallel to speed up large test suites:
+
+```ruby
+# test/test_helper.rb
+class ActiveSupport::TestCase
+  parallelize(workers: :number_of_processors)
+end
+```
+
+Run with custom worker count:
+
+```bash
+PARALLEL_WORKERS=4 rails test
+```
+
+Use threads instead of processes for lighter parallelization:
+
+```ruby
+parallelize(workers: :number_of_processors, with: :threads)
+```
+
+See `references/parallel-testing.md` for comprehensive parallel testing guidance including setup/teardown hooks and debugging flaky tests.
+
+## Time Helpers
+
+Test time-sensitive code with `ActiveSupport::Testing::TimeHelpers`:
+
+```ruby
+test "subscription expires after one year" do
+  user = users(:subscriber)
+  user.update!(subscribed_at: Time.current)
+
+  travel_to 1.year.from_now do
+    assert user.subscription_expired?
+  end
+end
+
+test "discount valid during sale period" do
+  travel_to Date.new(2024, 12, 25) do
+    assert Product.christmas_sale_active?
+  end
+end
+```
+
+Available helpers:
+
+```ruby
+travel_to(date_or_time)     # Set current time within block
+travel(duration)            # Move time forward by duration
+freeze_time                 # Freeze at current time
+travel_back                 # Return to real time (automatic after block)
+```
+
 ## Further Reading
 
 For deeper exploration:
 
 - **`references/tdd-workflow.md`**: Test-driven development in Rails
 - **`references/test-types.md`**: Model, controller, integration, system test patterns
+- **`references/parallel-testing.md`**: Parallel testing configuration and troubleshooting
 
 For code examples:
 
