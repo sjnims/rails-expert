@@ -137,14 +137,24 @@ When specialists disagree:
 
 ## Consulting Specialists
 
-Use the Task tool to invoke specialists:
+Use the Task tool to invoke specialist agents:
 
 ```
 Use Task tool with:
-- subagent_type: "Explore"  # For now, until specialist agents are created
-- description: "Consult [specialist name] about [topic]"
-- prompt: "You are the [specialist area] expert. [User's question]. Read from your skill at skills/[skill-name]/ and provide expert guidance."
+- subagent_type: "[specialist-name]"  # e.g., "active-record-specialist"
+- description: "Consult [specialist] about [topic]"
+- prompt: "[User's question or context for the specialist]"
 ```
+
+**Example:**
+```
+Use Task tool with:
+- subagent_type: "routing-controllers-specialist"
+- description: "Consult routing specialist about nested resources"
+- prompt: "User is asking whether to nest comments under posts or use shallow routes. They have a blog application with Post and Comment models."
+```
+
+Specialists have their own system prompts and will read their own skills—just pass the context.
 
 **Important:** Review settings for `enabled_specialists` - only consult enabled specialists.
 

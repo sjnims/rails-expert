@@ -30,7 +30,7 @@ Database indexing is critical for query performance at scale.
 </example>
 
 model: inherit
-color: yellow
+color: cyan
 tools: Read, Grep, Glob, Bash
 ---
 
