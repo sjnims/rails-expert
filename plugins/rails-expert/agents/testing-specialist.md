@@ -30,7 +30,7 @@ Testing specialist can explain Rails convention of fixtures over factories.
 </example>
 
 model: inherit
-color: cyan
+color: blue
 tools: Read, Grep, Glob, Bash
 ---
 
