@@ -30,7 +30,12 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Run ShellCheck
-        uses: ludeeus/action-shellcheck@00cae500b08a931fb5698e11e79bfbd38e612a38 # v2.0.0
-        with:
-          scandir: '.'
-          severity: warning
+        run: |
+          # Find all shell scripts and run shellcheck (pre-installed on ubuntu runners)
+          shopt -s globstar nullglob
+          scripts=(**/*.sh)
+          if [ ${#scripts[@]} -eq 0 ]; then
+            echo "No shell scripts found"
+            exit 0
+          fi
+          shellcheck --severity=warning "${scripts[@]}"
