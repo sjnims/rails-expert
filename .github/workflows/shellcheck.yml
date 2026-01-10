@@ -31,8 +31,7 @@ jobs:
 
       - name: Run ShellCheck
         run: |
-          # Find all shell scripts and run shellcheck
-          # shellcheck is pre-installed on GitHub-hosted ubuntu runners
+          # Find all shell scripts and run shellcheck (pre-installed on ubuntu runners)
           shopt -s globstar nullglob
           scripts=(**/*.sh)
           if [ ${#scripts[@]} -eq 0 ]; then
