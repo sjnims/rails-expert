@@ -33,29 +33,13 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Setup Node.js
-        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
-        with:
-          node-version: "20"
-
       - name: Setup Ruby
         uses: ruby/setup-ruby@d5f787ce339eb0767271bc01d922e85644c2c8ab # v1.280.0
         with:
           ruby-version: '3.4'
 
-      - name: Setup Python
-        uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548 # v6.1.0
-        with:
-          python-version: '3.12'
-          cache: 'pip'
-          cache-dependency-path: '.github/requirements-lint.txt'
-
-      - name: Install linters
-        run: |
-          npm install -g markdownlint-cli
-          pip install -r .github/requirements-lint.txt
-          gem install rubocop:1.81.1 rubocop-rails:2.34.2 --no-document
-          sudo apt-get update && sudo apt-get install -y shellcheck
+      - name: Install RuboCop
+        run: gem install rubocop:1.81.1 rubocop-rails:2.34.2 --no-document
 
       - name: Review PR with Claude
         uses: anthropics/claude-code-action@1b8ee3b94104046d71fde52ec3557651ad8c0d71 # v1.0.29
@@ -73,10 +57,10 @@ jobs:
             ## Instructions
             1. Get the PR diff to understand what changed
             2. Run linters on changed files:
-               - If any `.md` files were changed, run `markdownlint --config .markdownlint.json <files>`
-               - If any `.yml`/`.yaml` files were changed, run `yamllint -c .yamllint.yml <files>`
+               - If any `.md` files were changed, run `npx markdownlint-cli2 <files>`
+               - If any `.yml`/`.yaml` files were changed, run `pipx run yamllint==1.37.1 -c .yamllint.yml <files>`
                - If any `.rb` files were changed, run `rubocop --config .rubocop.yml <files>`
-               - If any `.sh` files were changed, run `shellcheck <files>`
+               - If any `.sh` files were changed, run `shellcheck <files>` (pre-installed on runner)
             3. Review the changes against the criteria below
             4. Post a summary comment with your findings
 
@@ -88,7 +72,7 @@ jobs:
             - **Agents** (`plugins/*/agents/*.md`): Verify <example> blocks for triggering, appropriate tool restrictions.
 
             ### Markdown Quality (run markdownlint)
-            Run `markdownlint --config .markdownlint.json` on changed `.md` files. Key rules enforced:
+            Run `npx markdownlint-cli2` on changed `.md` files. Key rules enforced:
             - ATX-style headers (`#` not underlines)
             - Dash-style lists (`-` not `*` or `+`)
             - 2-space indentation for nested lists
@@ -96,7 +80,7 @@ jobs:
             Include any lint errors in your review under a "Markdown Linting" section.
 
             ### YAML Quality (run yamllint)
-            Run `yamllint -c .yamllint.yml` on changed `.yml`/`.yaml` files. Key rules:
+            Run `pipx run yamllint==1.37.1 -c .yamllint.yml` on changed `.yml`/`.yaml` files. Key rules:
             - 2-space indentation
             - No trailing whitespace
             - Newline at end of file
@@ -132,4 +116,4 @@ jobs:
             Be constructive and helpful. Focus on significant issues, not nitpicks.
             If the PR looks good, say so briefly - don't invent problems.
           claude_args: |
-            --allowedTools "Bash(gh pr:*),Bash(markdownlint:*),Bash(yamllint:*),Bash(rubocop:*),Bash(shellcheck:*),Read,Glob,Grep,mcp__github_inline_comment__create_inline_comment"
+            --allowedTools "Bash(gh pr:*),Bash(npx markdownlint-cli2:*),Bash(pipx run yamllint:*),Bash(rubocop:*),Bash(shellcheck:*),Read,Glob,Grep,mcp__github_inline_comment__create_inline_comment"
